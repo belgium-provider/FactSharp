@@ -1,3 +1,4 @@
+using System.Collections;
 using FactSharp;
 
 var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -8,6 +9,12 @@ var handler = new HttpClientHandler
     UseProxy = true,
     // Autres configurations de proxy
 };
+
+DotNetEnv.Env.Load();
+foreach (DictionaryEntry de in Environment.GetEnvironmentVariables())
+{
+    builder.Configuration[de.Key.ToString() ?? string.Empty] = de.Value?.ToString();
+}
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

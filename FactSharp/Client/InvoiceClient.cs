@@ -3,7 +3,7 @@ using FactSharp.Options;
 
 namespace FactSharp.Client;
 
-public class InvoiceClient(WeFactOptions options, HttpClient? httpClient = null) : BaseClient(options, httpClient), IInvoiceClient
+public class InvoiceClient(string apiKey, HttpClient? httpClient = null) : BaseClient(apiKey, httpClient), IInvoiceClient
 {
-    public void Test() => Console.WriteLine("Testing invoice");
+    public string TestReturnString() => "my test string";
 }
