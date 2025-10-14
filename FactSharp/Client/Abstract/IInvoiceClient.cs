@@ -1,6 +1,6 @@
 namespace FactSharp.Client.Abstract;
 
-public class IInvoiceClient
+public interface IInvoiceClient
 {
-    
+    void Test();
 }

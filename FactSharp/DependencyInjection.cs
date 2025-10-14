@@ -1,5 +1,7 @@
 using System;
 using System.Net.Http;
+using FactSharp.Client;
+using FactSharp.Client.Abstract;
 using FactSharp.Options;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -28,7 +30,7 @@ public static class DependencyInjection
         services.AddSingleton(wefactOptions);
         
         //registering services.
-        //to do.
+        RegisterWeFactClient<IInvoiceClient, InvoiceClient>(services);
         
         return services;
     }
@@ -37,10 +39,9 @@ public static class DependencyInjection
     /// Register client
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="options"></param>
     /// <typeparam name="TInterface"></typeparam>
     /// <typeparam name="TImplementation"></typeparam>
-    private static void RegisterWeFactClient<TInterface, TImplementation>(IServiceCollection services, WeFactOptions options) where TInterface : class where TImplementation : class, TInterface
+    private static void RegisterWeFactClient<TInterface, TImplementation>(IServiceCollection services) where TInterface : class where TImplementation : class, TInterface
     {
         //configure client builder.
 
