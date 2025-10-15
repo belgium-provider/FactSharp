@@ -2,6 +2,7 @@ using System.Text;
 using FactSharp.Http;
 using FactSharp.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace FactSharp.Client;
 
@@ -13,6 +14,19 @@ public abstract class BaseClient(string apiKey, HttpClient? httpClient = null) :
     private readonly WeFactOptions _options = new()
     {
         ApiKey = apiKey
+    };
+    
+    /// <summary>
+    /// Configure JSON settings for handling snake_case returns
+    /// </summary>
+    private static readonly JsonSerializerSettings JsonSettings = new()
+    {
+        ContractResolver = new DefaultContractResolver
+        {
+            NamingStrategy = new SnakeCaseNamingStrategy()
+        },
+        MissingMemberHandling = MissingMemberHandling.Ignore,
+        NullValueHandling = NullValueHandling.Ignore
     };
 
     /// <summary>
@@ -35,7 +49,7 @@ public abstract class BaseClient(string apiKey, HttpClient? httpClient = null) :
             if (!httpResponse.IsSuccessStatusCode)
                 return new T() { };
         
-            return JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync()) ?? throw new Exception("JSON PARSING ERROR : " + content);
+            return JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync(), JsonSettings) ?? throw new Exception("JSON PARSING ERROR : " + content);
         }
         catch (Exception)
         {
