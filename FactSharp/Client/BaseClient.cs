@@ -34,10 +34,9 @@ public abstract class BaseClient(string apiKey, HttpClient? httpClient = null) :
     /// </summary>
     /// <param name="dataObject"></param>
     /// <typeparam name="T"></typeparam>
-    /// <typeparam name="TResponse"></typeparam>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    protected async Task<T> PostAsync<T,TResponse>(TResponse dataObject) where TResponse : BaseRequestObject where T : BaseResponseObject, new()
+    protected async Task<T> PostAsync<T>(BaseRequestObject dataObject) where T : BaseResponseObject
     {
         try
         {
@@ -47,13 +46,13 @@ public abstract class BaseClient(string apiKey, HttpClient? httpClient = null) :
         
             HttpResponseMessage httpResponse = await _httpClient.PostAsync(_apiEndpoint, content);
             if (!httpResponse.IsSuccessStatusCode)
-                return new T() { };
+                return BaseResponseObject.CreateErrorObject<T>(dataObject.Controller, dataObject.Action, "Error calling HTTP method");
         
             return JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync(), JsonSettings) ?? throw new Exception("JSON PARSING ERROR : " + content);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            return new T() { };
+            return BaseResponseObject.CreateErrorObject<T>(dataObject.Controller, dataObject.Action, e.Message);
         }
     }
     

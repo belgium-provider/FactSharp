@@ -14,7 +14,6 @@ public class TestsController(WeFactOptions options) : ControllerBase
     [HttpGet]
     public ActionResult TestController()
     {
-        using IInvoiceClient invoiceClient = new InvoiceClient(_options.ApiKey);
-        return Ok(invoiceClient.TestReturnString());
+        return Ok();
     }
 }

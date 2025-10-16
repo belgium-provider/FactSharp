@@ -1,6 +1,8 @@
+using FactSharp.Http.Invoice;
+
 namespace FactSharp.Client.Abstract;
 
 public interface IInvoiceClient : IBaseClient
 {
-    string TestReturnString();
+    Task<InvoiceResponse> GetInvoiceByCodeAsync(string invoiceCode);
 }
