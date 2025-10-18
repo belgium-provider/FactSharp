@@ -1,7 +1,7 @@
 using System.Collections;
 using FactSharp;
 
-var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 var handler = new HttpClientHandler

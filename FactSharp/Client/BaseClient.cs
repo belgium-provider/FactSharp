@@ -8,8 +8,8 @@ namespace FactSharp.Client;
 
 public abstract class BaseClient(string apiKey, HttpClient? httpClient = null) : IDisposable
 {
-    private readonly string _apiEndpoint = "https://api.mijnwefact.nl/v2/";
-    
+    private const string ApiEndpoint = "https://api.mijnwefact.nl/v2/";
+
     private readonly HttpClient _httpClient = httpClient ?? new HttpClient();
     private readonly WeFactOptions _options = new()
     {
@@ -25,8 +25,8 @@ public abstract class BaseClient(string apiKey, HttpClient? httpClient = null) :
         {
             NamingStrategy = new SnakeCaseNamingStrategy()
         },
-        MissingMemberHandling = MissingMemberHandling.Ignore,
-        NullValueHandling = NullValueHandling.Ignore
+        NullValueHandling = NullValueHandling.Include,
+        Formatting = Formatting.Indented
     };
 
     /// <summary>
@@ -41,14 +41,19 @@ public abstract class BaseClient(string apiKey, HttpClient? httpClient = null) :
         try
         {
             dataObject.ApiKey = _options.ApiKey;
-            string jsonBody = JsonConvert.SerializeObject(dataObject);
+            string jsonBody = JsonConvert.SerializeObject(dataObject, JsonSettings);
             StringContent content = new(jsonBody, Encoding.UTF8, "application/json");
         
-            HttpResponseMessage httpResponse = await _httpClient.PostAsync(_apiEndpoint, content);
+            HttpResponseMessage httpResponse = await _httpClient.PostAsync(ApiEndpoint, content);
             if (!httpResponse.IsSuccessStatusCode)
                 return BaseResponseObject.CreateErrorObject<T>(dataObject.Controller, dataObject.Action, "Error calling HTTP method");
         
-            return JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync(), JsonSettings) ?? throw new Exception("JSON PARSING ERROR : " + content);
+            string jsonResponse = await httpResponse.Content.ReadAsStringAsync();
+            T tResponse = JsonConvert.DeserializeObject<T>(jsonResponse, JsonSettings) ?? throw new Exception("JSON PARSING ERROR : ");
+            if(tResponse.Errors != null && tResponse.Errors.Count != 0)
+                return BaseResponseObject.CreateErrorObject<T>(dataObject.Controller, dataObject.Action, tResponse.Errors[0], tResponse.Errors);
+            
+            return tResponse;
         }
         catch (Exception e)
         {
