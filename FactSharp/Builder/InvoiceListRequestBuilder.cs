@@ -1,23 +1,22 @@
+using FactSharp.Builder.Abstract;
 using FactSharp.Http.Invoice.Request;
-using FactSharp.Http.Invoice.Response;
 
 namespace FactSharp.Builder;
 
-public class InvoiceListRequestBuilder
+public class InvoiceListRequestBuilder : BaseListRequestBuilder<InvoiceListRequest, InvoiceListRequestBuilder>
 {
-    private readonly InvoiceListRequest _request = new()
+    public InvoiceListRequestBuilder()
     {
-        Controller = "invoice",
-        Action = "list",
-    };
+        Request.Controller = "invoice";
+        Request.Action = "list";
+        Request.Sort = "InvoiceCode";
+    }
+
+    public InvoiceListRequestBuilder SetStatus(string? status)
+    {
+        Request.Status = status;
+        return this;
+    }
     
-    public InvoiceListRequestBuilder SetOffset(int offset) {_request.Offset = offset; return this;}
-    public InvoiceListRequestBuilder SetLimit(int limit) {_request.Limit = limit; return this;}
-    public InvoiceListRequestBuilder SetOrder(string order) { _request.Order = order; return this; }
-    public InvoiceListRequestBuilder SetSort(string sort) { _request.Sort = sort; return this; }
-    public InvoiceListRequestBuilder SetStats(string? status) { _request.Status = status; return this; }
-    public InvoiceListRequestBuilder SetCreated(DateTime? created) { _request.Created = created; return this; }
-    public InvoiceListRequestBuilder SetModified(DateTime? modified) { _request.Modified = modified; return this; }
-    
-    public InvoiceListRequest Build() =>  _request;
+    public override InvoiceListRequest Build() => Request;
 }

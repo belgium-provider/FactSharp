@@ -1,11 +1,7 @@
 namespace FactSharp.Http.Invoice.Response;
 
-public class InvoiceListResponse : BaseResponseObject
+public class InvoiceListResponse : BaseListObjectResponse
 {
-    public int TotalResults { get; set; } = 1;
-    public int CurrentResults { get; set; } = 1;
-    public int Offset { get; set; } = 0;
-
     public List<InvoiceListHttpObject> Invoices { get; set; } = [];
 }
 

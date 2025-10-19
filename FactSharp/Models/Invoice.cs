@@ -50,5 +50,5 @@ public class Invoice
     public string? Comment { get; set; }
     
     //invoice lines
-    public List<InvoiceLine> InvoiceLines { get; set; } = [];
+    //public List<InvoiceLine> InvoiceLines { get; set; } = [];
 }

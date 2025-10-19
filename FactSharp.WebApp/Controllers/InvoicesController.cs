@@ -52,6 +52,7 @@ public class InvoicesController(WeFactOptions options) : ControllerBase
     {
         //Crafting object
         InvoiceListRequest requestObject = new InvoiceListRequestBuilder()
+            .SetStatus(Types.InvoiceStatus.Paid) //paid
             .SetLimit(50)
             .Build();
         
@@ -67,10 +68,13 @@ public class InvoicesController(WeFactOptions options) : ControllerBase
     [HttpPost]
     public async Task<ActionResult<CreateInvoiceResponse>> CreateInvoiceAsync()
     {
-        List<InvoiceLine> lines = new();
-        lines.Add(InvoiceLineFactory.CreateBaseLine(10.00m, "Mollie payment fees", DateTime.Now));
-        lines.Add(InvoiceLineFactory.CreateProductLine(10.00m, "Mollie payment fees", DateTime.Now, "PRODUCT_CODE"));
-        
+        List<InvoiceLine> lines =
+        [
+            InvoiceLineFactory.CreateBaseLine(10.00m, "Mollie payment fees", DateTime.Now),
+            InvoiceLineFactory.CreateProductLine(10.00m, "Mollie payment fees", DateTime.Now, "PRODUCT_CODE")
+
+        ];
+
         CreateInvoiceRequest invoiceRequest = new CreateInvoiceBuilder(debtorCode:"YOUR_DEBTOR_CODE")
             .SetStatus(EInvoiceStatus.Paid) //paid invoice
             .AddLines(lines)
