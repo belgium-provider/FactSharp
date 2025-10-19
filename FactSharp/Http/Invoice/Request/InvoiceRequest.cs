@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace FactSharp.Http.Invoice;
+namespace FactSharp.Http.Invoice.Request;
 
 public class InvoiceRequest : BaseRequestObject
 {

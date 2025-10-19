@@ -1,7 +1,7 @@
 using FactSharp.Client.Abstract;
 using FactSharp.Http;
-using FactSharp.Http.Invoice;
-using FactSharp.Options;
+using FactSharp.Http.Invoice.Request;
+using FactSharp.Http.Invoice.Response;
 
 namespace FactSharp.Client;
 
@@ -40,4 +40,13 @@ public class InvoiceClient(string apiKey, HttpClient? httpClient = null) : BaseC
                 
         return await this.PostAsync<CreateInvoiceResponse>(createInvoiceRequest);
     }
+
+    /// <summary>
+    /// marking an invoice as paid
+    /// </summary>
+    /// <param name="invoiceCode"></param>
+    /// <param name="paymentMethod"></param>
+    /// <param name="paidDate"></param>
+    /// <returns></returns>
+    public async Task<MarkAsPaidResponse> MarkAsPaidAsync(string invoiceCode, string paymentMethod, DateTime? paidDate = null) => await this.PostAsync<MarkAsPaidResponse>(new MarkAsPaidRequest(){Controller = "invoice", Action = "markaspaid", PaymentMethod = paymentMethod, InvoiceCode = invoiceCode, PayDate = paidDate ?? DateTime.Now});
 }

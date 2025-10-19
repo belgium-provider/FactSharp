@@ -1,7 +1,7 @@
 using FactSharp.Models;
 using FactSharp.Types;
 
-namespace FactSharp.Http.Invoice;
+namespace FactSharp.Http.Invoice.Request;
 
 public class CreateInvoiceRequest : BaseRequestObject
 {

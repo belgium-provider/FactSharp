@@ -1,4 +1,4 @@
-namespace FactSharp.Http.Invoice;
+namespace FactSharp.Http.Invoice.Request;
 
 public class InvoiceListRequest : BaseRequestObject
 {

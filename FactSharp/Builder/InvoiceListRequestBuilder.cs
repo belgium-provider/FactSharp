@@ -1,4 +1,5 @@
-using FactSharp.Http.Invoice;
+using FactSharp.Http.Invoice.Request;
+using FactSharp.Http.Invoice.Response;
 
 namespace FactSharp.Builder;
 

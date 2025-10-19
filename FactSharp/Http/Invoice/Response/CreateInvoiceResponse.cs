@@ -1,4 +1,4 @@
-namespace FactSharp.Http.Invoice;
+namespace FactSharp.Http.Invoice.Response;
 
 public class CreateInvoiceResponse : BaseResponseObject
 {

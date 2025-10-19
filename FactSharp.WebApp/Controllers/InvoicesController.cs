@@ -2,10 +2,11 @@ using FactSharp.Builder;
 using FactSharp.Client;
 using FactSharp.Client.Abstract;
 using FactSharp.Factory;
-using FactSharp.Http.Invoice;
 using FactSharp.Models;
 using FactSharp.Options;
 using FactSharp.Types;
+using FactSharp.Http.Invoice.Request;
+using FactSharp.Http.Invoice.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FactSharp.WebApp.Controllers;
@@ -77,6 +78,18 @@ public class InvoicesController(WeFactOptions options) : ControllerBase
 
         using IInvoiceClient client = new InvoiceClient(_options.ApiKey);
         CreateInvoiceResponse wefactResponse = await client.CreateInvoiceAsync(invoiceRequest);
+        return Ok(wefactResponse);
+    }
+    
+    /// <summary>
+    /// Marking an invoice as paid
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost("pay")]
+    public async Task<ActionResult<MarkAsPaidResponse>> MarkInvoiceAsPaidAsync()
+    {
+        using IInvoiceClient client = new InvoiceClient(_options.ApiKey);
+        MarkAsPaidResponse wefactResponse = await client.MarkAsPaidAsync("INVOICE_CODE", Types.PaymentMethod.Other, DateTime.Now);
         return Ok(wefactResponse);
     }
 }
