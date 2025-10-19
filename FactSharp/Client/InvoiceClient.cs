@@ -1,4 +1,5 @@
 using FactSharp.Client.Abstract;
+using FactSharp.Http;
 using FactSharp.Http.Invoice;
 using FactSharp.Options;
 
@@ -25,5 +26,18 @@ public class InvoiceClient(string apiKey, HttpClient? httpClient = null) : BaseC
     /// </summary>
     /// <param name="invoiceListRequest"></param>
     /// <returns></returns>
-    public Task<InvoiceListResponse> GetInvoiceListAsync(InvoiceListRequest invoiceListRequest) => this.PostAsync<InvoiceListResponse>(invoiceListRequest);
+    public async Task<InvoiceListResponse> GetInvoiceListAsync(InvoiceListRequest invoiceListRequest) =>  await this.PostAsync<InvoiceListResponse>(invoiceListRequest);
+
+    /// <summary>
+    /// Creating a new invoice
+    /// </summary>
+    /// <param name="createInvoiceRequest"></param>
+    /// <returns></returns>
+    public async Task<CreateInvoiceResponse> CreateInvoiceAsync(CreateInvoiceRequest createInvoiceRequest)
+    {
+        if(createInvoiceRequest.InvoiceLines.Count == 0)
+            return BaseResponseObject.CreateErrorObject<CreateInvoiceResponse>("invoice", "invoice list", "invoice list empty");
+                
+        return await this.PostAsync<CreateInvoiceResponse>(createInvoiceRequest);
+    }
 }

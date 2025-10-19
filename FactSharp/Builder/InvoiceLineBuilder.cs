@@ -25,5 +25,7 @@ public class InvoiceLineBuilder(decimal priceExcl, string description, DateTime 
     public InvoiceLineBuilder SetStartPeriod(string? start) { _line.StartPeriod = start; return this; }
     public InvoiceLineBuilder SetEndPeriod(string? end) { _line.EndPeriod = end; return this; }
 
+    public InvoiceLineBuilder SetProductCode(string? productCode) { _line.ProductCode = productCode ?? string.Empty; return this; }
+
     public InvoiceLine Build() => _line;
 }

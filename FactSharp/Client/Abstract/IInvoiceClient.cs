@@ -7,4 +7,5 @@ public interface IInvoiceClient : IBaseClient
     Task<InvoiceResponse> GetInvoiceByCodeAsync(string invoiceCode);
     Task<InvoiceResponse> GetInvoiceByIdAsync(int id);
     Task<InvoiceListResponse> GetInvoiceListAsync(InvoiceListRequest invoiceListRequest);
+    Task<CreateInvoiceResponse> CreateInvoiceAsync(CreateInvoiceRequest createInvoiceRequest);
 }
