@@ -26,8 +26,8 @@ public class InvoicesController(WeFactOptions options) : ControllerBase
     public async Task<ActionResult<InvoiceResponse>> GetInvoiceByRefAsync(string invoiceCode)
     {
         using IInvoiceClient client = new InvoiceClient(_options.ApiKey);
-        InvoiceResponse wefactResponse = await client.GetInvoiceByCodeAsync(invoiceCode);
-        return Ok(wefactResponse);
+        InvoiceResponse invoice = await client.GetInvoiceByCodeAsync(invoiceCode);
+        return Ok(invoice);
     }
     
     /// <summary>
@@ -39,8 +39,8 @@ public class InvoicesController(WeFactOptions options) : ControllerBase
     public async Task<ActionResult<InvoiceResponse>> GetInvoiceByIdAsync(int id)
     {
         using IInvoiceClient client = new InvoiceClient(_options.ApiKey);
-        InvoiceResponse wefactResponse = await client.GetInvoiceByIdAsync(id);
-        return Ok(wefactResponse);
+        InvoiceResponse invoice = await client.GetInvoiceByIdAsync(id);
+        return Ok(invoice);
     }
     
     /// <summary>
@@ -57,8 +57,8 @@ public class InvoicesController(WeFactOptions options) : ControllerBase
             .Build();
         
         using IInvoiceClient client = new InvoiceClient(_options.ApiKey);
-        InvoiceListResponse wefactResponse = await client.GetInvoiceListAsync(requestObject);
-        return Ok(wefactResponse);
+        InvoiceListResponse invoiceList = await client.GetInvoiceListAsync(requestObject);
+        return Ok(invoiceList);
     }
     
     /// <summary>
@@ -81,8 +81,8 @@ public class InvoicesController(WeFactOptions options) : ControllerBase
             .Build();
 
         using IInvoiceClient client = new InvoiceClient(_options.ApiKey);
-        CreateInvoiceResponse wefactResponse = await client.CreateInvoiceAsync(invoiceRequest);
-        return Ok(wefactResponse);
+        CreateInvoiceResponse response = await client.CreateInvoiceAsync(invoiceRequest);
+        return Ok(response);
     }
     
     /// <summary>
@@ -93,7 +93,7 @@ public class InvoicesController(WeFactOptions options) : ControllerBase
     public async Task<ActionResult<MarkAsPaidResponse>> MarkInvoiceAsPaidAsync()
     {
         using IInvoiceClient client = new InvoiceClient(_options.ApiKey);
-        MarkAsPaidResponse wefactResponse = await client.MarkAsPaidAsync("INVOICE_CODE", Types.PaymentMethod.Other, DateTime.Now);
-        return Ok(wefactResponse);
+        MarkAsPaidResponse response = await client.MarkAsPaidAsync("INVOICE_CODE", Types.PaymentMethod.Other, DateTime.Now);
+        return Ok(response);
     }
 }

@@ -23,8 +23,8 @@ public class CustomersController(WeFactOptions options) : ControllerBase
     public async Task<ActionResult<CustomerResponse>> GestCustomerById(int id)
     {
         using ICustomerClient client = new CustomerClient(_options.ApiKey);
-        CustomerResponse wefactResponse = await client.GetCustomerByIdAsync(id);
-        return Ok(wefactResponse);
+        CustomerResponse customer = await client.GetCustomerByIdAsync(id);
+        return Ok(customer);
     }
     
     /// <summary>
@@ -36,8 +36,8 @@ public class CustomersController(WeFactOptions options) : ControllerBase
     public async Task<ActionResult<CustomerResponse>> GetCustomerByReferenceAsync(string debtorCode)
     {
         using ICustomerClient client = new CustomerClient(_options.ApiKey);
-        CustomerResponse wefactResponse = await client.GetCustomerByCodeAsync(debtorCode);
-        return Ok(wefactResponse);
+        CustomerResponse customer = await client.GetCustomerByCodeAsync(debtorCode);
+        return Ok(customer);
     }
     
     
@@ -53,7 +53,7 @@ public class CustomersController(WeFactOptions options) : ControllerBase
             .Build();
 
         using ICustomerClient client = new CustomerClient(_options.ApiKey);
-        CustomerListResponse wefactResponse = await client.GetCustomerListAsync(request);
-        return Ok(wefactResponse);
+        CustomerListResponse customerList = await client.GetCustomerListAsync(request);
+        return Ok(customerList);
     }
 }
