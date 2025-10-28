@@ -48,12 +48,13 @@ public class InvoicesController(WeFactOptions options) : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<ActionResult<InvoiceListResponse>> GetInvoicesAsync()
+    public async Task<ActionResult<InvoiceListResponse>> GetInvoicesAsync([FromQuery] EInvoiceStatus? status = null, [FromQuery] int? page = null)
     {
         //Crafting object
         InvoiceListRequest requestObject = new InvoiceListRequestBuilder()
-            .SetStatus(Types.InvoiceStatus.Paid) //paid
+            .SetStatus(status ?? EInvoiceStatus.Paid) //paid
             .SetLimit(50)
+            .SetOffset(page ?? 1)
             .Build();
         
         using IInvoiceClient client = new InvoiceClient(_options.ApiKey);
@@ -72,7 +73,6 @@ public class InvoicesController(WeFactOptions options) : ControllerBase
         [
             InvoiceLineFactory.CreateBaseLine(10.00m, "Mollie payment fees", DateTime.Now),
             InvoiceLineFactory.CreateProductLine(10.00m, "Mollie payment fees", DateTime.Now, "PRODUCT_CODE")
-
         ];
 
         CreateInvoiceRequest invoiceRequest = new CreateInvoiceBuilder(debtorCode:"YOUR_DEBTOR_CODE")

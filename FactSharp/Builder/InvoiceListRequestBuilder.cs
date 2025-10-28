@@ -1,5 +1,6 @@
 using FactSharp.Builder.Abstract;
 using FactSharp.Http.Invoice.Request;
+using FactSharp.Types;
 
 namespace FactSharp.Builder;
 
@@ -12,7 +13,7 @@ public class InvoiceListRequestBuilder : BaseListRequestBuilder<InvoiceListReque
         Request.Sort = "InvoiceCode";
     }
 
-    public InvoiceListRequestBuilder SetStatus(string? status)
+    public InvoiceListRequestBuilder SetStatus(EInvoiceStatus? status)
     {
         Request.Status = status;
         return this;

@@ -15,19 +15,6 @@ public abstract class BaseClient(string apiKey, HttpClient? httpClient = null) :
     {
         ApiKey = apiKey
     };
-    
-    /// <summary>
-    /// Configure JSON settings for handling snake_case returns
-    /// </summary>
-    private static readonly JsonSerializerSettings JsonSettings = new()
-    {
-        ContractResolver = new DefaultContractResolver
-        {
-            NamingStrategy = new SnakeCaseNamingStrategy()
-        },
-        NullValueHandling = NullValueHandling.Include,
-        Formatting = Formatting.Indented
-    };
 
     /// <summary>
     /// Base post async method
@@ -41,7 +28,7 @@ public abstract class BaseClient(string apiKey, HttpClient? httpClient = null) :
         try
         {
             dataObject.ApiKey = _options.ApiKey;
-            string jsonBody = JsonConvert.SerializeObject(dataObject, JsonSettings);
+            string jsonBody = JsonConvert.SerializeObject(dataObject);
             StringContent content = new(jsonBody, Encoding.UTF8, "application/json");
         
             HttpResponseMessage httpResponse = await _httpClient.PostAsync(ApiEndpoint, content);
@@ -49,7 +36,7 @@ public abstract class BaseClient(string apiKey, HttpClient? httpClient = null) :
                 return BaseResponseObject.CreateErrorObject<T>(dataObject.Controller, dataObject.Action, "Error calling HTTP method");
         
             string jsonResponse = await httpResponse.Content.ReadAsStringAsync();
-            T tResponse = JsonConvert.DeserializeObject<T>(jsonResponse, JsonSettings) ?? throw new Exception("JSON PARSING ERROR : ");
+            T tResponse = JsonConvert.DeserializeObject<T>(jsonResponse) ?? throw new Exception("JSON PARSING ERROR : ");
             if(tResponse.Errors != null && tResponse.Errors.Count != 0)
                 return BaseResponseObject.CreateErrorObject<T>(dataObject.Controller, dataObject.Action, tResponse.Errors[0], tResponse.Errors);
             
