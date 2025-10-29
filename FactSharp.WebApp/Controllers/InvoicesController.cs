@@ -89,11 +89,11 @@ public class InvoicesController(WeFactOptions options) : ControllerBase
     /// Marking an invoice as paid
     /// </summary>
     /// <returns></returns>
-    [HttpPost("pay")]
-    public async Task<ActionResult<MarkAsPaidResponse>> MarkInvoiceAsPaidAsync()
+    [HttpPost("pay/{invoiceCode}")]
+    public async Task<ActionResult<MarkAsPaidResponse>> MarkInvoiceAsPaidAsync([FromQuery] string invoiceCode)
     {
         using IInvoiceClient client = new InvoiceClient(_options.ApiKey);
-        MarkAsPaidResponse response = await client.MarkAsPaidAsync("INVOICE_CODE", Types.PaymentMethod.Other, DateTime.Now);
+        MarkAsPaidResponse response = await client.MarkAsPaidAsync(invoiceCode, Types.PaymentMethod.Other, DateTime.Now);
         return Ok(response);
     }
 }
