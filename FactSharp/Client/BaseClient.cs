@@ -15,6 +15,15 @@ public abstract class BaseClient(string apiKey, HttpClient? httpClient = null) :
     {
         ApiKey = apiKey
     };
+    
+    /// <summary>
+    /// Configure JSON settings for handling snake_case returns
+    /// </summary>
+    private static readonly JsonSerializerSettings JsonSettings = new()
+    {
+        MissingMemberHandling = MissingMemberHandling.Ignore,
+        NullValueHandling = NullValueHandling.Ignore
+    };
 
     /// <summary>
     /// Base post async method
@@ -28,7 +37,7 @@ public abstract class BaseClient(string apiKey, HttpClient? httpClient = null) :
         try
         {
             dataObject.ApiKey = _options.ApiKey;
-            string jsonBody = JsonConvert.SerializeObject(dataObject);
+            string jsonBody = JsonConvert.SerializeObject(dataObject, JsonSettings);
             StringContent content = new(jsonBody, Encoding.UTF8, "application/json");
         
             HttpResponseMessage httpResponse = await _httpClient.PostAsync(ApiEndpoint, content);

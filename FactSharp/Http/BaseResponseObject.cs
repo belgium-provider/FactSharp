@@ -1,11 +1,18 @@
+using Newtonsoft.Json;
+
 namespace FactSharp.Http;
 
 public abstract class BaseResponseObject
 {
+    [JsonProperty("status")]
     public string Status { get; set; } = string.Empty;
+    [JsonProperty("action")]
     public string Action { get; set; } = string.Empty;
+    [JsonProperty("controller")]
     public string Controller { get; set; } = string.Empty;
+    [JsonProperty("date")]
     public required DateTime Date { get; set; } = DateTime.Now;
+    [JsonProperty("errors")]
     public List<string>? Errors { get; set; } = null;
 
     /// <summary>

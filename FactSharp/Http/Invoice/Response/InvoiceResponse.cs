@@ -1,6 +1,9 @@
+using Newtonsoft.Json;
+
 namespace FactSharp.Http.Invoice.Response;
 
 public class InvoiceResponse : BaseResponseObject
 {
+    [JsonProperty("invoice")]
     public required Models.Invoice Invoice { get; set; }
 }

@@ -1,7 +1,10 @@
+using Newtonsoft.Json;
+
 namespace FactSharp.Http.Customer.Response;
 
 public class CustomerListResponse : BaseListObjectResponse
 {
+    [JsonProperty("debtors")]
     public List<CustomerListHttpObject> Debtors { get; set; } = [];
 }
 

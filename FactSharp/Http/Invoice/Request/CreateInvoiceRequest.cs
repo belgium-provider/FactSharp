@@ -1,5 +1,6 @@
 using FactSharp.Models;
 using FactSharp.Types;
+using Newtonsoft.Json;
 
 namespace FactSharp.Http.Invoice.Request;
 
@@ -8,7 +9,9 @@ public class CreateInvoiceRequest : BaseRequestObject
     internal CreateInvoiceRequest() {}
     
     //default
+    [JsonProperty("controller")]
     public override required string Controller { get; set; } = "invoice";
+    [JsonProperty("action")]
     public override required string Action { get; set; } = "add";
     
     //required

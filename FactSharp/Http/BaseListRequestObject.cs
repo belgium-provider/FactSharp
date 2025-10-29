@@ -4,7 +4,9 @@ namespace FactSharp.Http;
 
 public abstract class BaseListRequestObject(string controller, string action, string sort) : BaseRequestObject
 {
+    [JsonProperty("controller")]
     public override string Controller { get; set; } = controller;
+    [JsonProperty("action")]
     public override string Action { get; set; } = action;
 
     [JsonProperty("offset")]
