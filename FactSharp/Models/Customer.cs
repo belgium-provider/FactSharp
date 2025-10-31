@@ -57,4 +57,7 @@ public class Customer
     public string InvoiceEmailAddress { get; set; } = string.Empty;
     //public List<Translation> Translations { get; set; } = [];
     //public List<string> Groups { get; set; } = [];
+    
+    [JsonPropertyName("CustomFields")]
+    public CustomFields? CustomFields { get; set; } = null;
 }
