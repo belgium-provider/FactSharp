@@ -1,0 +1,35 @@
+name: Publish NuGet
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Extract version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+      
+      #restore deps
+      - name: Restore dependencies
+        run: dotnet restore FactSharp/FactSharp.csproj
+
+      #build
+      - name: Build project
+        run: dotnet build FactSharp/FactSharp.csproj -c Release --no-restore
+      
+      #pack
+      - name: Pack library
+        run: dotnet pack FactSharp/FactSharp.csproj -c Release
+
+      #publish
+      - name: Publish to NuGet.org
+        run: dotnet nuget push FactSharp/artifacts/*.nupkg --api-key ${{ secrets.NUGET_PACKAGE_TOKEN }} --source https://api.nuget.org/v3/index.json
