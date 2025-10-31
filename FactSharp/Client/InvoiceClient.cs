@@ -20,6 +20,20 @@ public class InvoiceClient(string apiKey, HttpClient? httpClient = null) : BaseC
     /// <param name="id"></param>
     /// <returns></returns>
     public async Task<InvoiceResponse> GetInvoiceByIdAsync(int id) => await this.PostAsync<InvoiceResponse>(new InvoiceRequestById() { Controller = "invoice", Action = "show", Identifier = id });
+    
+    /// <summary>
+    /// Sending an invoice by email using it's unique code
+    /// </summary>
+    /// <param name="invoiceCode"></param>
+    /// <returns></returns>
+    public async Task<InvoiceResponse> SendInvoiceByRefAsync(string invoiceCode) => await this.PostAsync<InvoiceResponse>(new InvoiceRequestByCode(){Controller = "invoice", Action = "sendbyemail", InvoiceCode = invoiceCode});
+
+    /// <summary>
+    /// Sending an invoice by email using it's unique id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task<InvoiceResponse> SendInvoiceByIdAsync(int id) => await this.PostAsync<InvoiceResponse>(new InvoiceRequestById() { Controller = "invoice", Action = "sendbyemail", Identifier = id });
 
     /// <summary>
     /// Retrieve a list of invoices.
