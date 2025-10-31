@@ -8,7 +8,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <!-- metadata of package -->
     <PackageId>FactSharp</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Yekuuun</Authors>
     <Company>Yekuuun</Company>
     <Description>A basic SDK for the WeFact API.</Description>
