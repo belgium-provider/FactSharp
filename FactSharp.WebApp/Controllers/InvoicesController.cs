@@ -86,10 +86,23 @@ public class InvoicesController(WeFactOptions options) : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpPost("pay/{invoiceCode}")]
-    public async Task<ActionResult<MarkAsPaidResponse>> MarkInvoiceAsPaidAsync([FromQuery] string invoiceCode)
+    public async Task<ActionResult<MarkAsPaidResponse>> MarkInvoiceAsPaidAsync(string invoiceCode)
     {
         using IInvoiceClient client = new InvoiceClient(_options.ApiKey);
         MarkAsPaidResponse response = await client.MarkAsPaidAsync(invoiceCode, Types.PaymentMethod.Other, DateTime.Now);
+        return Ok(response);
+    }
+    
+    /// <summary>
+    /// Sending a single invoice by email
+    /// </summary>
+    /// <param name="invoiceCode"></param>
+    /// <returns></returns>
+    [HttpPost("send/{invoiceCode}")]
+    public async Task<ActionResult<InvoiceResponse>> SendInvoiceByEmailAsync(string invoiceCode)
+    {
+        using IInvoiceClient client = new InvoiceClient(_options.ApiKey);
+        InvoiceResponse response = await client.SendInvoiceByRefAsync(invoiceCode);
         return Ok(response);
     }
 }

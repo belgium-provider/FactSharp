@@ -8,5 +8,5 @@ public class CustomFields
     public string? GoCardLessId { get; set; } = null;
 
     [JsonPropertyName("gocardlessmandaat")]
-    public string? GoCardLessMandateId { get; set; } = null;
+    public string? GoCardLessMandaat { get; set; } = null;
 }
