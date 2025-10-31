@@ -75,11 +75,7 @@ public class InvoicesController(WeFactOptions options) : ControllerBase
             InvoiceLineFactory.CreateProductLine(10.00m, "Mollie payment fees", DateTime.Now, "PRODUCT_CODE")
         ];
 
-        CreateInvoiceRequest invoiceRequest = new CreateInvoiceBuilder(debtorCode:"YOUR_DEBTOR_CODE")
-            .SetStatus(EInvoiceStatus.Paid) //paid invoice
-            .AddLines(lines)
-            .Build();
-
+        CreateInvoiceRequest invoiceRequest = CreateInvoiceFactory.CreateBaseInvoice("DEBTOR_CODE", EInvoiceStatus.Paid, lines);
         using IInvoiceClient client = new InvoiceClient(_options.ApiKey);
         CreateInvoiceResponse response = await client.CreateInvoiceAsync(invoiceRequest);
         return Ok(response);
