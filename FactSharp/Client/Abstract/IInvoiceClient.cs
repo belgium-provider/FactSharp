@@ -11,5 +11,7 @@ public interface IInvoiceClient : IBaseClient
     Task<InvoiceResponse> SendInvoiceByIdAsync(int id);
     Task<InvoiceListResponse> GetInvoiceListAsync(InvoiceListRequest invoiceListRequest);
     Task<CreateInvoiceResponse> CreateInvoiceAsync(CreateInvoiceRequest createInvoiceRequest);
+    Task<InvoiceResponse> AddInvoiceLineAsync(AddInvoiceLineRequest request);
+    Task<InvoiceResponse> DeleteInvoiceLineAsync(DeleteInvoiceLineRequest request);
     Task<MarkAsPaidResponse> MarkAsPaidAsync(string invoiceCode, string paymentMethod, DateTime? paidDate = null);
 }

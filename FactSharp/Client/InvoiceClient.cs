@@ -56,6 +56,32 @@ public class InvoiceClient(string apiKey, HttpClient? httpClient = null) : BaseC
     }
 
     /// <summary>
+    /// Add a new invoiceline to an existing invoice
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    public async Task<InvoiceResponse> AddInvoiceLineAsync(AddInvoiceLineRequest request)
+    {
+        if(request.InvoiceLines.Count == 0)
+            return BaseResponseObject.CreateErrorObject<InvoiceResponse>("invoiceline", "invoice list", "invoice list empty");
+        
+        return await this.PostAsync<InvoiceResponse>(request);
+    }
+    
+    /// <summary>
+    /// Add a new invoiceline to an existing invoice
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    public async Task<InvoiceResponse> DeleteInvoiceLineAsync(DeleteInvoiceLineRequest request)
+    {
+        if(request.InvoiceLineIds.Count == 0)
+            return BaseResponseObject.CreateErrorObject<InvoiceResponse>("invoiceline", "invoice list", "invoice list empty");
+        
+        return await this.PostAsync<InvoiceResponse>(request);
+    }
+
+    /// <summary>
     /// marking an invoice as paid
     /// </summary>
     /// <param name="invoiceCode"></param>
