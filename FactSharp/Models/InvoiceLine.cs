@@ -12,16 +12,16 @@ public class InvoiceLine
     /// <summary>
     /// Optional fields
     /// </summary>
-    public int Identifier { get; set; }
-    public int Number { get; set; }
+    public int? Identifier { get; set; }
+    public int? Number { get; set; }
     public string? NumberSuffix { get; set; }
-    public string ProductCode { get; set; } = string.Empty;
-    public decimal DiscountPercentage { get; set; }
-    public string DiscountPercentageType { get; set; } = string.Empty;
-    public string TaxCode { get; set; } = string.Empty;
-    public decimal TaxPercentage { get; set; }
-    public int PeriodicId { get; set; }
-    public int Periods { get; set; }
+    public string? ProductCode { get; set; }
+    public decimal? DiscountPercentage { get; set; }
+    public string? DiscountPercentageType { get; set; }
+    public string? TaxCode { get; set; }
+    public decimal? TaxPercentage { get; set; }
+    public int? PeriodicId { get; set; }
+    public int? Periods { get; set; }
     public string? Periodic { get; set; }
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
