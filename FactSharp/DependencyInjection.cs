@@ -21,6 +21,8 @@ public static class DependencyInjection
     /// <exception cref="ArgumentException"></exception>
     public static IServiceCollection AddWeFactApi(this IServiceCollection services, Action<WeFactOptions> wefactOptionsDelegate)
     {
+        ArgumentNullException.ThrowIfNull(wefactOptionsDelegate);
+
         WeFactOptions wefactOptions = new();
         wefactOptionsDelegate.Invoke(wefactOptions);
 
@@ -31,6 +33,8 @@ public static class DependencyInjection
         
         //registering services.
         RegisterWeFactClient<IInvoiceClient, InvoiceClient>(services);
+        RegisterWeFactClient<ICustomerClient, CustomerClient>(services);
+        RegisterWeFactClient<IProductClient, ProductClient>(services);
         
         return services;
     }
@@ -43,8 +47,6 @@ public static class DependencyInjection
     /// <typeparam name="TImplementation"></typeparam>
     private static void RegisterWeFactClient<TInterface, TImplementation>(IServiceCollection services) where TInterface : class where TImplementation : class, TInterface
     {
-        //configure client builder.
-
-        //add a retry policy using Polly ?
+        IHttpClientBuilder clientBuilder = services.AddHttpClient<TInterface, TImplementation>();
     }
 }
