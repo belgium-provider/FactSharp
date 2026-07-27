@@ -86,7 +86,7 @@ public class InvoicesController(WeFactOptions options) : ControllerBase
 
 ## Requirements
 
-- .NET 8.0 SDK or later
+- .NET 10.0 SDK or later
 - A WeFact account with an API key
 
 ## Resources
