@@ -9,10 +9,12 @@
                                    ----- WeFact C# SDK -----
 ```
 
-![NuGet Version](https://img.shields.io/nuget/v/FactSharp?label=NuGet)
-![NuGet Downloads](https://img.shields.io/nuget/dt/FactSharp)
-![.NET 8](https://img.shields.io/badge/.NET-8.0-512BD4)
-![MIT License](https://img.shields.io/badge/license-MIT-green)
+<p align="center">
+  <a href="https://www.nuget.org/packages/FactSharp/"><img src="https://img.shields.io/nuget/v/FactSharp?label=NuGet" alt="NuGet Version"></a>
+  <a href="https://www.nuget.org/packages/FactSharp/"><img src="https://img.shields.io/nuget/dt/FactSharp" alt="NuGet Downloads"></a>
+  <img src="https://img.shields.io/badge/.NET-10.0-512BD4" alt=".NET 10">
+  <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License">
+</p>
 
 **FactSharp** is a strongly-typed C# SDK for the [WeFact](https://www.wefact.nl/) invoicing API. It wraps invoicing operations — customers, invoices, invoice lines and products — behind a clean, async client surface, so you don't have to hand-roll HTTP calls, request payloads and response parsing.
 
